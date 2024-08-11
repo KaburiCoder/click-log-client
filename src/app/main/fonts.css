@@ -1,0 +1,23 @@
+@font-face {
+  font-display: swap;
+  font-family: "Left Hand";
+  font-style: normal;
+  font-weight: 400;
+  src: url("src/shared/assets/fonts/left-hand.ttf") format("truetype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "NanumSquareRoundR";
+  font-style: normal;
+  font-weight: 400;
+  src: url("src/shared/assets/fonts/NanumSquareRoundR.ttf") format("truetype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "NanumPen";
+  font-style: normal;
+  font-weight: 400;
+  src: url("src/shared/assets/fonts/NanumPen.otf") format("opentype");
+}
