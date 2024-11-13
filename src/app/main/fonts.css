@@ -3,7 +3,7 @@
   font-family: "Left Hand";
   font-style: normal;
   font-weight: 400;
-  src: url("src/shared/assets/fonts/left-hand.ttf") format("truetype");
+  src: url("/fonts/left-hand.ttf") format("truetype");
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-family: "NanumSquareRoundR";
   font-style: normal;
   font-weight: 400;
-  src: url("src/shared/assets/fonts/NanumSquareRoundR.ttf") format("truetype");
+  src: url("/fonts/NanumSquareRoundR.ttf") format("truetype");
 }
 
 @font-face {
@@ -19,5 +19,5 @@
   font-family: "NanumPen";
   font-style: normal;
   font-weight: 400;
-  src: url("src/shared/assets/fonts/NanumPen.otf") format("opentype");
+  src: url("/fonts/NanumPen.otf") format("opentype");
 }

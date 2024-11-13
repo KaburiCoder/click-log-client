@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { STORAGE_KEYS } from '../constants/storage-keys';
+import { paths } from '../paths';
 
 export const axiosClient = axios.create({
   baseURL: import.meta.env.PROD
@@ -22,4 +23,15 @@ axiosClient.interceptors.request.use(
   (error) => {
     return Promise.reject(error);
   }
-); 
+);
+
+axiosClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+      window.location.href = paths.login;
+    }
+    return Promise.reject(error);
+  }
+);

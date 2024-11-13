@@ -5,7 +5,7 @@ export const paths = {
 
 export const apiPaths = {
   click: {
-    errorLogs: "/click/error-logs",
+    errorLog: "/click/error-log",
     stacktrace: (id: string) => `/click/error-log/${id}/stacktrace`,
   },
   cpm: {
