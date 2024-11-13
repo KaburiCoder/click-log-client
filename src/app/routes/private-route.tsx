@@ -8,9 +8,7 @@ export const PrivateRoute: FC = () => {
   const { isAuthenticated, isPending } = useIsAuthenticated();
   const location = useLocation();
 
-  if (isPending) {
-    return <Loading />;
-  }
+  if (isPending) return <Loading />;
 
   if (isAuthenticated) {
     if (location.pathname === paths.login) {
