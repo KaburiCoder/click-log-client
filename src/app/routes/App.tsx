@@ -1,23 +1,13 @@
-import { RootPage } from "@pages/root";
-import { paths } from "@shared/paths";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Layout } from "../layout";
+import { RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { router } from "./routes";
 
-const router = createBrowserRouter([
-  {
-    path: paths.root,
-    element: <Layout />,
-    children: [
-      {
-        path: paths.root,
-        element: <RootPage />,
-      },
-    ],
-  },
-]);
+const queryClient = new QueryClient();
 
-function App() {
-  return <RouterProvider router={router} />;
-}
-
-export default App;
+export const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
+};
