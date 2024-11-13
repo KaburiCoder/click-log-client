@@ -1,5 +1,9 @@
 export class Env {
-  static readonly HEADER_KEY = import.meta.env.VITE_HEADER_KEY;
-  static readonly HEADER_VALUE = import.meta.env.VITE_HEADER_VALUE;
+  static get HEADER_KEY() {
+    return import.meta.env.VITE_HEADER_KEY;
+  }
+  static get HEADER_VALUE() {
+    return import.meta.env.VITE_HEADER_VALUE;
+  }
 }
 

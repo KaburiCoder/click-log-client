@@ -59,7 +59,7 @@ export const Sidebar = () => {
       <div className="border-b border-gray-700 p-4">
         <div className="flex items-center gap-2">
           <img src="/vite.svg" alt="Logo" className="h-8 w-8" />
-          {!isCollapsed && <span className="text-xl font-semibold">Argo</span>}
+          {!isCollapsed && <span className="text-xl font-semibold">ClickSoft</span>}
         </div>
       </div>
 
