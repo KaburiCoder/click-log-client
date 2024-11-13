@@ -8,7 +8,7 @@ interface PageLayoutProps extends React.PropsWithChildren {
 
 export const PageLayout = ({ children, title }: PageLayoutProps) => {
   return (
-    <div className="p-8">
+    <div className="p-8 min-w-[50rem]">
       <PageTitle>{title}</PageTitle>
       <PageBody>{children}</PageBody>
     </div>

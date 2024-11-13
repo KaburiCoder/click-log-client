@@ -1,9 +1,9 @@
+import { STORAGE_KEYS } from "@/shared/constants/storage-keys";
+import { paths } from "@/shared/paths";
 import { cn } from "@/shared/utils";
-import { Book, ChevronLeft, LogOut } from "lucide-react";
+import { AlertCircle, ChevronLeft, LogOut, Settings } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useSidebarStore } from "../model/sidebar-store";
-import { paths } from "@/shared/paths";
-import { STORAGE_KEYS } from "@/shared/constants/storage-keys";
 
 type NavItem = {
   to: string;
@@ -15,11 +15,11 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     to: "/error-logs",
-    icon: <Book size={20} />,
+    icon: <AlertCircle size={20} />,
     label: "에러 로그",
     isMain: true,
   },
-  { to: "/setting-records", icon: <Book size={20} />, label: "설정 정보" },
+  { to: "/setting-records", icon: <Settings size={20} />, label: "설정 정보" },
   // { to: "/applications", icon: <Boxes size={20} />, label: "Applications" },
   // { to: "/settings", icon: <Settings size={20} />, label: "Settings" },
   // { to: "/user-info", icon: <User size={20} />, label: "User Info" },

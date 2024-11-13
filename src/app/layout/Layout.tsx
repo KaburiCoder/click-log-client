@@ -10,10 +10,12 @@ export const Layout = () => {
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
       <main className={cn(
-        "flex-1 transition-all duration-300 p-4",
+        "flex-1 transition-all duration-300 p-4 overflow-auto",
         isCollapsed ? "ml-16" : "ml-64"
       )}>
-        <Outlet />
+        <div className="min-h-full">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
