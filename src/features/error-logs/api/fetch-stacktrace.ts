@@ -1,5 +1,4 @@
 import { axiosClient } from "@/shared/api";
-import { Env } from "@/shared/env";
 import { apiPaths } from "@/shared/paths";
 
 interface StacktraceResponse {
@@ -7,10 +6,6 @@ interface StacktraceResponse {
 }
 
 export const fetchStacktrace = async (id: string): Promise<StacktraceResponse> => {
-  const response = await axiosClient.get(apiPaths.click.stacktrace(id), {
-    headers: {
-      [Env.HEADER_KEY]: Env.HEADER_VALUE,
-    },
-  });
+  const response = await axiosClient.get(apiPaths.click.stacktrace(id));
   return response.data;
 };
