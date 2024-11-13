@@ -3,18 +3,20 @@ import { useMemo } from "react";
 import { ErrorLog } from "../models/types";
 import { format } from "date-fns";
 
-export const useErrorLogsColumns = () => {
+export const useErrorLogsColumns = (
+  csNameMap: Map<string, string> | undefined,
+) => {
+  console.log(csNameMap);
   const columnHelper = createColumnHelper<ErrorLog>();
   const columns = useMemo(
     () => [
       columnHelper.accessor("createdAt", {
         header: "발생시간",
-        cell: (info) =>
-          format(info.getValue(), "yyyy-MM-dd HH:mm:ss"),
+        cell: (info) => format(info.getValue(), "yy-MM-dd HH:mm:ss"),
       }),
-      columnHelper.accessor("hospitalName", {
+      columnHelper.accessor("ykiho", {
         header: "병원명",
-        cell: (info) => info.getValue(),
+        cell: (info) => csNameMap?.get(info.getValue()) || "",
       }),
       columnHelper.accessor("computerName", {
         header: "컴퓨터명",
@@ -38,8 +40,12 @@ export const useErrorLogsColumns = () => {
           <div className="max-w-xs truncate"> {info.getValue()} </div>
         ),
       }),
+      columnHelper.accessor("clientVersion", {
+        header: "버전",
+        cell: (info) => info.getValue(),
+      }),
     ],
-    [columnHelper],
+    [columnHelper, csNameMap],
   );
 
   return { columns };

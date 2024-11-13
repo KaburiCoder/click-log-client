@@ -8,6 +8,7 @@ interface ErrorLogsFilterProps {
   onSearchChange: (value: string) => void;
   onDateChange: (value: DateRange) => void;
   onSearch: () => void;
+  isPending: boolean;
 }
 
 export const ErrorLogsFilter = ({
@@ -15,6 +16,7 @@ export const ErrorLogsFilter = ({
   onSearchChange,
   onDateChange,
   onSearch,
+  isPending,
 }: ErrorLogsFilterProps) => {
   return (
     <div className="flex items-center gap-4">
@@ -28,7 +30,9 @@ export const ErrorLogsFilter = ({
         onChange={(e) => onSearchChange(e.target.value)}
         className="max-w-sm"
       />
-      <Button onClick={onSearch}>조회</Button>
+      <Button onClick={onSearch} disabled={isPending}>
+        조회
+      </Button>
     </div>
   );
 };

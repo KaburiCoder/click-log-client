@@ -1,21 +1,40 @@
-import { useState, FormEvent } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authSignin } from '../api/auth-signin';
+import { AxiosError } from 'axios';
 
 export const useAuth = () => {
   const navigate = useNavigate();
+  const { mutate: signin, isPending } = useMutation({
+    mutationFn: authSignin,
+    onSuccess: (data) => {
+      localStorage.setItem('accessToken', data.accessToken);
+      navigate('/');
+    },
+    onError: (error: AxiosError) => {
+      if (error.response?.status === 401) {
+        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      } else {
+        alert('알 수 없는 오류가 발생했습니다.');
+      }
+    },
+  });
+
+
   const [loginForm, setLoginForm] = useState({
-    username: '',
+    userId: '',
     password: '',
   });
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    localStorage.setItem('isAuthenticated', 'true');
-    navigate('/');
+    signin(loginForm);
   };
 
   return {
     loginForm,
+    isPending,
     setLoginForm,
     handleLogin,
   };

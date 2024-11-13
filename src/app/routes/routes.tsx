@@ -7,12 +7,12 @@ import { ErrorLogsPage } from "@/pages/error-logs";
 
 export const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
     element: <PrivateRoute />,
     children: [
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
       {
         element: <Layout />,
         children: [

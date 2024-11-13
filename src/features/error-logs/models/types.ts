@@ -12,4 +12,13 @@ export interface ErrorLog {
   additionalData: string;
   clientVersion: string;
   stackTrace: string;
-} 
+}
+
+export interface CsNamesDto {
+  totalCount: number;
+  data: CsName[];
+}
+export interface CsName {
+  code: string;
+  myung: string;
+}

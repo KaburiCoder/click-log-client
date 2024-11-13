@@ -1,41 +1,82 @@
+import { Loading } from "@/widgets/loading";
+import { useStackTrace } from "../hooks/use-stack-trace";
 import { ErrorLog } from "../models/types";
+import { useEffect } from "react";
 
 interface ErrorLogDetailModalProps {
   log: ErrorLog;
+  csNameMap: Map<string, string> | undefined;
   onClose: () => void;
 }
 
 export const ErrorLogDetailModal = ({
   log,
+  csNameMap,
   onClose,
 }: ErrorLogDetailModalProps) => {
+  const { stackTrace, isPending } = useStackTrace(log.id);
+
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
+  if (isPending) {
+    return <Loading />;
+  }
+
   return (
-    <div className="fixed inset-0 top-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="w-full max-w-2xl rounded-lg bg-white p-6">
+    <div
+      className="fixed inset-0 top-0 flex items-center justify-center bg-black bg-opacity-50 duration-200 animate-in fade-in"
+      onClick={onClose}
+    >
+      <div
+        className="w-fit max-w-[80%] overflow-hidden rounded-lg bg-white p-6 duration-300 animate-in slide-in-from-bottom-4"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2 className="mb-4 text-xl font-bold">에러 상세 내역</h2>
-        <div className="space-y-2">
-          <p>
-            <strong>발생시간:</strong>{" "}
-            {log.createdAt.toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}
-          </p>
-          <p>
-            <strong>병원명:</strong> {log.hospitalName}
-          </p>
-          <p>
-            <strong>컴퓨터명:</strong> {log.computerName}
-          </p>
-          <p>
-            <strong>모듈:</strong> {log.moduleName}
-          </p>
-          <p>
-            <strong>로그 레벨:</strong> {log.logLevel}
-          </p>
-          <p>
-            <strong>예외 타입:</strong> {log.exceptionType}
-          </p>
-          <p>
-            <strong>에러 메시지:</strong> {log.errorMessage}
-          </p>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-[4.5rem_1fr] gap-2">
+            <strong>발생시간:</strong>
+            <span>
+              {log.createdAt.toLocaleString("ko-KR", {
+                timeZone: "Asia/Seoul",
+              })}
+            </span>
+          </div>
+          <div className="grid grid-cols-[4.5rem_1fr] gap-2">
+            <strong>병원명:</strong>
+            <span>{csNameMap?.get(log.ykiho) || ""}</span>
+          </div>
+          <div className="grid grid-cols-[4.5rem_1fr] gap-2">
+            <strong>컴퓨터명:</strong>
+            <span>{log.computerName}</span>
+          </div>
+          <div className="grid grid-cols-[4.5rem_1fr] gap-2">
+            <strong>모듈:</strong>
+            <span>{log.moduleName}</span>
+          </div>
+          <div className="grid grid-cols-[4.5rem_1fr] gap-2">
+            <strong>로그 레벨:</strong>
+            <span>{log.logLevel}</span>
+          </div>
+          <div className="grid grid-cols-[4.5rem_1fr] gap-2">
+            <strong>예외 타입:</strong>
+            <span>{log.exceptionType}</span>
+          </div>
+          <div className="col-span-2 grid grid-cols-[4.5rem_1fr] gap-2">
+            <strong>Error:</strong>
+            <span>{log.errorMessage}</span>
+          </div>
+          <div className="col-span-2 grid max-h-[50vh] w-full grid-cols-[4.5rem_1fr] gap-2">
+            <strong>Stack:</strong>
+            <span className="overflow-y-auto whitespace-pre-wrap break-all">
+              {stackTrace}
+            </span>
+          </div>
         </div>
         <button
           onClick={onClose}

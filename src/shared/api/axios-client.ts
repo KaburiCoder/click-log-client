@@ -12,7 +12,7 @@ export const axiosClient = axios.create({
 // 인터셉터 설정
 axiosClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

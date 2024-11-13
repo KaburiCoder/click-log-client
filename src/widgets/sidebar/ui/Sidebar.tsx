@@ -2,15 +2,22 @@ import { cn } from "@/shared/utils";
 import { Book, ChevronLeft, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useSidebarStore } from "../model/sidebar-store";
+import { paths } from "@/shared/paths";
 
 type NavItem = {
   to: string;
   icon: React.ReactNode;
   label: string;
+  isMain?: boolean;
 };
 
 const navItems: NavItem[] = [
-  { to: "/error-logs", icon: <Book size={20} />, label: "에러 로그" },
+  {
+    to: "/error-logs",
+    icon: <Book size={20} />,
+    label: "에러 로그",
+    isMain: true,
+  },
   { to: "/setting-records", icon: <Book size={20} />, label: "설정 정보" },
   // { to: "/applications", icon: <Boxes size={20} />, label: "Applications" },
   // { to: "/settings", icon: <Settings size={20} />, label: "Settings" },
@@ -24,8 +31,8 @@ export const Sidebar = () => {
   const location = useLocation();
 
   const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated');
-    window.location.href = '/login';
+    localStorage.removeItem("isAuthenticated");
+    window.location.href = "/login";
   };
 
   return (
@@ -66,7 +73,10 @@ export const Sidebar = () => {
                 className={cn(
                   "flex items-center gap-3 rounded-md p-2 hover:bg-[#2C3E67]",
                   isCollapsed && "justify-center",
-                  location.pathname === item.to && "bg-[#2C3E67]"
+                  location.pathname === item.to && "bg-[#2C3E67]",
+                  location.pathname === paths.root &&
+                    item.isMain &&
+                    "bg-[#2C3E67] text-white",
                 )}
               >
                 {item.icon}
@@ -75,7 +85,7 @@ export const Sidebar = () => {
             </li>
           ))}
         </ul>
-        
+
         <button
           onClick={handleLogout}
           className={cn(
