@@ -3,6 +3,7 @@ import { Book, ChevronLeft, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useSidebarStore } from "../model/sidebar-store";
 import { paths } from "@/shared/paths";
+import { STORAGE_KEYS } from "@/shared/constants/storage-keys";
 
 type NavItem = {
   to: string;
@@ -31,8 +32,8 @@ export const Sidebar = () => {
   const location = useLocation();
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    window.location.href = "/login";
+    localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+    window.location.href = paths.login;
   };
 
   return (
@@ -59,7 +60,9 @@ export const Sidebar = () => {
       <div className="border-b border-gray-700 p-4">
         <div className="flex items-center gap-2">
           <img src="/vite.svg" alt="Logo" className="h-8 w-8" />
-          {!isCollapsed && <span className="text-xl font-semibold">ClickSoft</span>}
+          {!isCollapsed && (
+            <span className="text-xl font-semibold">ClickSoft</span>
+          )}
         </div>
       </div>
 

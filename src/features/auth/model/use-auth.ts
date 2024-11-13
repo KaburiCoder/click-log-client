@@ -3,13 +3,14 @@ import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authSignin } from '../api/auth-signin';
 import { AxiosError } from 'axios';
+import { STORAGE_KEYS } from '@/shared/constants/storage-keys';
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const { mutate: signin, isPending } = useMutation({
     mutationFn: authSignin,
     onSuccess: (data) => {
-      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.accessToken);
       navigate('/');
     },
     onError: (error: AxiosError) => {
