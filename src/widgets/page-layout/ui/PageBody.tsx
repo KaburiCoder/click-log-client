@@ -3,7 +3,7 @@ interface PageBodyProps {
 }
 
 export const PageBody = ({ children }: PageBodyProps) => (
-  <div className="bg-white shadow-md rounded-lg p-2">
+  <div className="bg-white shadow-md rounded-lg p-2 overflow-x-auto">
     {children}
   </div>
 ); 
