@@ -143,7 +143,7 @@ export const ErrorLogsPagination = ({
             <PaginationLink
               onClick={() => setPageIndex(table.getPageCount() - 1)}
               className={cn(
-                pageIndex === table.getPageCount() - 1 && "pointer-events-none opacity-50",
+                (pageIndex === table.getPageCount() - 1 || !table.getCanNextPage()) && "pointer-events-none opacity-50",
                 "cursor-pointer"
               )}
             >
