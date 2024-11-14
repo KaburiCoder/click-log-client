@@ -11,9 +11,12 @@ export const SearchTagInput = ({ tags, onTagChange, ...props }: SearchTagInputPr
   const [searchs, setSearchs] = useState<string[]>(tags);
 
   const handleAddSearch = (value: string) => {
+    const trimmedValue = value.trim();
+    if (!trimmedValue) return;
+
     setSearchs((prev) => {
-      if (prev.includes(value)) return prev;
-      const newSearchs = [...prev, value];
+      if (prev.includes(trimmedValue)) return prev;
+      const newSearchs = [...prev, trimmedValue];
       onTagChange(newSearchs);
       return newSearchs;
     });
