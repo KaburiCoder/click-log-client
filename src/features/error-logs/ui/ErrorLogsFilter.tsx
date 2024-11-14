@@ -1,4 +1,5 @@
 import { DatePickerRange } from "@/widgets/date-range-picker";
+import { SearchTagInput } from "@/widgets/search-tag-input";
 import { Button } from "@/widgets/ui/button";
 import { Input } from "@/widgets/ui/input";
 import { DateRange } from "react-day-picker";
@@ -9,6 +10,8 @@ interface ErrorLogsFilterProps {
   onDateChange: (value: DateRange) => void;
   onSearch: () => void;
   isPending: boolean;
+  tags: string[];
+  onTagChange: (value: string[]) => void;
 }
 
 export const ErrorLogsFilter = ({
@@ -17,6 +20,8 @@ export const ErrorLogsFilter = ({
   onDateChange,
   onSearch,
   isPending,
+  tags,
+  onTagChange,
 }: ErrorLogsFilterProps) => {
   return (
     <div className="flex items-center gap-4">
@@ -33,6 +38,11 @@ export const ErrorLogsFilter = ({
       <Button onClick={onSearch} disabled={isPending}>
         조회
       </Button>
+      <SearchTagInput
+        tags={tags}
+        onTagChange={onTagChange}
+        placeholder="제외 키워드를 입력하세요."
+      />
     </div>
   );
 };

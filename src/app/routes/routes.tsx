@@ -4,6 +4,7 @@ import { LoginPage } from "@/pages/auth";
 import { ListPage } from "@/pages/list";
 import { PrivateRoute } from "./private-route";
 import { ErrorLogsPage } from "@/pages/error-logs";
+import { SettingRecords } from "@/pages/setting-records";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/setting-records",
-            element: <div>Setting Records Page</div>,
+            element: <SettingRecords />,
           },
           {
             path: "/applications",

@@ -1,3 +1,4 @@
+import { Loading } from "@/widgets/loading";
 import { useMutation } from "@tanstack/react-query";
 import {
   getCoreRowModel,
@@ -5,7 +6,8 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { format } from "date-fns";
+import { useMemo, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { fetchErrorLogs } from "../api/fetch-error-logs";
 import { useCsNames } from "../hooks/use-cs-names";
@@ -15,8 +17,6 @@ import { ErrorLogDetailModal } from "./ErrorLogDetailModal";
 import { ErrorLogsFilter } from "./ErrorLogsFilter";
 import { ErrorLogsPagination } from "./ErrorLogsPagination";
 import { ErrorLogsTable } from "./ErrorLogsTable";
-import { format } from "date-fns";
-import { Loading } from "@/widgets/loading";
 
 export const ErrorLogsBody = () => {
   const [selectedLog, setSelectedLog] = useState<ErrorLog | null>(null);
@@ -29,6 +29,7 @@ export const ErrorLogsBody = () => {
   });
   const { csNameMap } = useCsNames();
   const { columns } = useErrorLogsColumns(csNameMap);
+  const [tags, setTags] = useState<string[]>([]);
 
   const { data, mutate, isPending } = useMutation({
     mutationFn: () =>
@@ -38,8 +39,19 @@ export const ErrorLogsBody = () => {
       }),
   });
 
+  const filteredData = useMemo(() => {
+    return (
+      data?.filter(
+        (log) =>
+          !tags.some((tag) =>
+            log.errorMessage.toLowerCase().includes(tag.toLowerCase()),
+          ),
+      ) ?? []
+    );
+  }, [data, tags]);
+
   const table = useReactTable({
-    data: data || [],
+    data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -81,6 +93,8 @@ export const ErrorLogsBody = () => {
     <div className="flex flex-col gap-2">
       {isPending && <Loading />}
       <ErrorLogsFilter
+        tags={tags}
+        onTagChange={setTags}
         searchText={searchText}
         onSearchChange={setSearchText}
         onDateChange={setDateRange}
