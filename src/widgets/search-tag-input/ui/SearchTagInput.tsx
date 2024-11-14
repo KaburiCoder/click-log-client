@@ -38,7 +38,7 @@ export const SearchTagInput = ({ tags, onTagChange, ...props }: SearchTagInputPr
           onRemove={() => handleRemoveSearch(index)}
         />
       ))}
-      <SearchInput onAdd={handleAddSearch} {...props} />
+      <SearchInput onAdd={handleAddSearch} className="placeholder:text-sm placeholder:text-muted-foreground" {...props} />
     </div>
   );
 };
