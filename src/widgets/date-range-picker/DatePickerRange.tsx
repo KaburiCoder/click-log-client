@@ -24,7 +24,10 @@ export function DatePickerRange({ className, onChange }: DatePickerRangeProps) {
   const [open, setOpen] = React.useState(false);
 
   const handleDateChange = (newDate: DateRange | undefined) => {
-    if (!newDate) return;
+    if (!newDate) {
+      setDate({ from: date?.from, to: date?.from });
+      return;
+    }
     let { from, to } = newDate;
     if (!to) {
       to = from;
