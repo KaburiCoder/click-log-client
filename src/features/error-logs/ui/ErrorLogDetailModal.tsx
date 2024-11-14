@@ -30,7 +30,7 @@ export const ErrorLogDetailModal = ({
 
   return (
     <div
-      className="fixed inset-0 top-0 flex items-center justify-center bg-black bg-opacity-50 duration-200 animate-in fade-in"
+      className="fixed inset-0 top-0 flex items-center justify-center bg-black bg-opacity-50 duration-200 animate-in fade-in z-10"
       onClick={onClose}
     >
       <div
