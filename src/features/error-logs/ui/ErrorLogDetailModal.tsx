@@ -2,6 +2,7 @@ import { Loading } from "@/widgets/loading";
 import { useStackTrace } from "../hooks/use-stack-trace";
 import { ErrorLog } from "../models/types";
 import { useEffect } from "react";
+import { format } from "date-fns/format";
 
 interface ErrorLogDetailModalProps {
   log: ErrorLog;
@@ -30,7 +31,7 @@ export const ErrorLogDetailModal = ({
 
   return (
     <div
-      className="fixed inset-0 top-0 flex items-center justify-center bg-black bg-opacity-50 duration-200 animate-in fade-in z-10"
+      className="fixed inset-0 top-0 z-10 flex items-center justify-center bg-black bg-opacity-50 duration-200 animate-in fade-in"
       onClick={onClose}
     >
       <div
@@ -41,11 +42,7 @@ export const ErrorLogDetailModal = ({
         <div className="grid grid-cols-2 gap-4">
           <div className="grid grid-cols-[4.5rem_1fr] gap-2">
             <strong>발생시간:</strong>
-            <span>
-              {log.createdAt.toLocaleString("ko-KR", {
-                timeZone: "Asia/Seoul",
-              })}
-            </span>
+            <span>{format(log.createdAt, "yy-MM-dd HH:mm:ss")}</span>
           </div>
           <div className="grid grid-cols-[4.5rem_1fr] gap-2">
             <strong>병원명:</strong>
