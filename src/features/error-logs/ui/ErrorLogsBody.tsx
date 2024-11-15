@@ -24,19 +24,22 @@ export const ErrorLogsBody = () => {
   const [pageSize, setPageSize] = useState(20);
   const [pageIndex, setPageIndex] = useState(0);
   const [dateRange, setDateRange] = useState<DateRange>({
-    from: new Date(new Date().setHours(0, 0, 0)),
-    to: new Date(new Date().setHours(23, 59, 59)),
+    from: new Date(),
+    to: new Date(),
   });
   const { csNameMap } = useCsNames();
   const { columns } = useErrorLogsColumns(csNameMap);
   const [tags, setTags] = useState<string[]>([]);
 
   const { data, mutate, isPending } = useMutation({
-    mutationFn: () =>
-      fetchErrorLogs({
-        startDate: dateRange.from?.toISOString() || "",
-        endDate: dateRange.to?.toISOString() || "",
-      }),
+    mutationFn: () => {
+      const startDate = dateRange.from?.setHours(0, 0, 0);
+      const endDate = dateRange.to?.setHours(23, 59, 59);
+      return fetchErrorLogs({
+        startDate: startDate ? new Date(startDate).toISOString() : "",
+        endDate: endDate ? new Date(endDate).toISOString() : "",
+      });
+    },
   });
 
   const filteredData = useMemo(() => {

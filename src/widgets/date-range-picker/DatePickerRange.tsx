@@ -25,19 +25,17 @@ export function DatePickerRange({ className, onChange }: DatePickerRangeProps) {
 
   const handleDateChange = (newDate: DateRange | undefined) => {
     if (!newDate) {
-      setDate({ from: date?.from, to: date?.from });
+      const from = date?.from ?? new Date();
+      const to = from;
+      setDate({ from, to });
+      onChange?.({ from, to });
       return;
     }
     let { from, to } = newDate;
     if (!to) {
       to = from;
     }
-    if (from) {
-      from = new Date(from.setHours(0, 0, 0));
-    }
-    if (to) {
-      to = new Date(to.setHours(23, 59, 59));
-    }
+
     setDate({ from, to });
     onChange?.({ from, to });
   };
