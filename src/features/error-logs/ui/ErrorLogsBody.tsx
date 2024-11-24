@@ -9,7 +9,7 @@ import {
 import { format } from "date-fns";
 import { useMemo, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { fetchErrorLogs } from "../api/fetch-error-logs";
+import { fetchErrorLogs, fetchErrorLogsByDate } from "../api/fetch-error-logs";
 import { useCsNames } from "../hooks/use-cs-names";
 import { useErrorLogsColumns } from "../hooks/use-error-logs-columns";
 import { ErrorLog } from "../models/types";
@@ -35,7 +35,7 @@ export const ErrorLogsBody = () => {
     mutationFn: () => {
       const startDate = dateRange.from?.setHours(0, 0, 0);
       const endDate = dateRange.to?.setHours(23, 59, 59);
-      return fetchErrorLogs({
+      return fetchErrorLogsByDate({
         startDate: startDate ? new Date(startDate).toISOString() : "",
         endDate: endDate ? new Date(endDate).toISOString() : "",
       });
