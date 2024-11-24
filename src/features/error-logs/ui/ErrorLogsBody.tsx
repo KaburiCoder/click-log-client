@@ -94,7 +94,11 @@ export const ErrorLogsBody = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      {isPending && <Loading />}
+      {isPending && (
+        <Loading>
+          <div>에러 로그를 조회 중입니다.</div>
+        </Loading>
+      )}
       <ErrorLogsFilter
         tags={tags}
         onTagChange={setTags}
