@@ -9,7 +9,7 @@ import {
 import { format } from "date-fns";
 import { useMemo, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { fetchErrorLogs, fetchErrorLogsByDate } from "../api/fetch-error-logs";
+import { fetchErrorLogsByDate } from "../api/fetch-error-logs";
 import { useCsNames } from "../hooks/use-cs-names";
 import { useErrorLogsColumns } from "../hooks/use-error-logs-columns";
 import { ErrorLog } from "../models/types";
