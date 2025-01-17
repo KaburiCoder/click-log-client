@@ -1,8 +1,8 @@
 import { axiosClient } from "@/shared/api";
-import { ErrorLog } from "../models/types";
 import { apiPaths } from "@/shared/paths";
-import { compareDesc, format } from "date-fns";
 import { loopDays } from "@/shared/utilities";
+import { compareDesc } from "date-fns";
+import { ErrorLog } from "../models/types";
 
 interface FetchErrorLogsParams {
   startDate: string;
