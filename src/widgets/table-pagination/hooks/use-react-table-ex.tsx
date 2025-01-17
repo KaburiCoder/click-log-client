@@ -1,46 +1,58 @@
+import { useSearchFilter } from "@/widgets/filters";
 import {
   ColumnDef,
   FilterFnOption,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  OnChangeFn,
-  PaginationState,
+  getSortedRowModel,
+  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import { useTablePagination } from "../context/TablePaginationContext";
-import { useSearchFilter } from "@/widgets/filters";
 
 interface Props<T> {
   data: T[];
   columns: ColumnDef<T, any>[];
   globalFilterFn?: FilterFnOption<T> | undefined;
-  onPaginationChange?: OnChangeFn<PaginationState> | undefined;
+  sorting?: SortingState | undefined;
+  onSortingChange?: (updater: any) => void;
 }
 
 export function useReactTableEx<T>({
   data,
   columns,
   globalFilterFn,
-  onPaginationChange,
+  sorting,
+  onSortingChange,
 }: Props<T>) {
   const { searchText } = useSearchFilter();
-  const { pageSize, pageIndex } = useTablePagination();
+  const { pageSize, pageIndex, setPageIndex, setPageSize } =
+    useTablePagination();
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
       globalFilter: searchText,
       pagination: {
         pageSize,
         pageIndex,
       },
+      sorting,
     },
+    onSortingChange,
     globalFilterFn,
-    onPaginationChange,
+    onPaginationChange: (updater) => {
+      if (typeof updater === "function") {
+        const newState = updater({ pageIndex, pageSize });
+        setPageIndex(newState.pageIndex);
+        setPageSize(newState.pageSize);
+      }
+    },
   });
 
   return table;

@@ -1,6 +1,6 @@
 import { axiosClient } from "@/shared/api";
-import { CsNamesDto } from "../models/types";
 import { Env } from "@/shared/env";
+import { CsNamesDto } from "../models/cs-names";
 
 export async function fetchCsNames(): Promise<CsNamesDto> {
   const response = await axiosClient.get("/cpm/cs/names", {

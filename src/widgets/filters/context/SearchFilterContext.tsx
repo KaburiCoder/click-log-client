@@ -6,8 +6,8 @@ type States = {
   searchText: string;
   dateRange: DateRange;
   isPending: boolean;
-  tags: string[];
-  setTags: (value: string[]) => void;
+  excludedTags: string[];
+  setExcludedTags: (value: string[]) => void;
   setDateRange: (value: DateRange) => void;
   setSearchText: (value: string) => void;
   setIsPending: (value: boolean) => void;
@@ -20,8 +20,8 @@ const SearchFilterContext = createContext<States>({
     to: new Date(),
   },
   isPending: false,
-  tags: [],
-  setTags: () => {},
+  excludedTags: [],
+  setExcludedTags: () => {},
   setDateRange: () => {},
   setSearchText: () => {},
   setIsPending: () => {},
@@ -41,11 +41,11 @@ export function SearchFilterProvider({ children }: ChildrenProps) {
       value={{
         searchText,
         dateRange,
-        tags,
+        excludedTags: tags,
         isPending,
         setSearchText,
         setIsPending,
-        setTags,
+        setExcludedTags: setTags,
         setDateRange,
       }}
     >

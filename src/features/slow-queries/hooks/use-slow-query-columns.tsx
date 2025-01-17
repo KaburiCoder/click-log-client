@@ -1,14 +1,13 @@
 import { createColumnHelper, SortingState } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import { ErrorLog } from "../models/types";
 import { format } from "date-fns";
+import { SlowQuery } from "../models/slow-query";
 
-export const useErrorLogsColumns = (
+export const useSlowQueryColumns = (
   csNameMap: Map<string, string> | undefined,
 ) => {
-  console.log(csNameMap);
   const [sorting, setSorting] = useState<SortingState>([]);
-  const columnHelper = createColumnHelper<ErrorLog>();
+  const columnHelper = createColumnHelper<SlowQuery>();
   const columns = useMemo(
     () => [
       columnHelper.accessor("createdAt", {
@@ -23,27 +22,29 @@ export const useErrorLogsColumns = (
         header: "컴퓨터명",
         cell: (info) => info.getValue(),
       }),
-      columnHelper.accessor("moduleName", {
-        header: "모듈",
+      columnHelper.accessor("assemblyName", {
+        header: "어셈블리",
         cell: (info) => info.getValue(),
       }),
-      columnHelper.accessor("logLevel", {
-        header: "레벨",
+      columnHelper.accessor("className", {
+        header: "클래스",
         cell: (info) => info.getValue(),
       }),
-      columnHelper.accessor("exceptionType", {
-        header: "예외 타입",
+      columnHelper.accessor("methodName", {
+        header: "메소드",
         cell: (info) => info.getValue(),
       }),
-      columnHelper.accessor("errorMessage", {
-        header: "에러 메시지",
+      columnHelper.accessor("queryString", {
+        header: "쿼리",
         cell: (info) => (
           <div className="max-w-xs truncate"> {info.getValue()} </div>
         ),
       }),
-      columnHelper.accessor("clientVersion", {
-        header: "버전",
-        cell: (info) => info.getValue(),
+      columnHelper.accessor("executionSeconds", {
+        header: "시간(초)",
+        cell: (info) => (
+          <div className="text-right">{Math.round(info.getValue())}</div>
+        ),
       }),
     ],
     [columnHelper, csNameMap],

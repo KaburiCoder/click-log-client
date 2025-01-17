@@ -9,7 +9,7 @@ interface SearchFilterProps {
 }
 
 export const SearchFilter = ({ onSearch }: SearchFilterProps) => {
-  const { searchText, isPending, tags, setDateRange, setSearchText, setTags } =
+  const { searchText, isPending, excludedTags: tags, setDateRange, setSearchText, setExcludedTags: setTags } =
     useSearchFilter();
 
   return (
