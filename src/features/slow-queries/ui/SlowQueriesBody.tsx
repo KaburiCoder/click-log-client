@@ -1,20 +1,19 @@
 import { useCsNames } from "@/features/_common";
-import { SearchFilter, useSearchFilter } from "@/widgets/filters";
-import BodyWrapper from "@/widgets/wappers/BodyWrapper";
-import { useSlowQueryColumns } from "../hooks/use-slow-query-columns";
-import {
-  CommonTable,
-  tableFilterFn,
-  TablePagination,
-  useReactTableEx,
-} from "@/widgets/table-pagination";
-import useFetchSlowQueries from "../hooks/use-fetch-slow-queries";
+import { SearchFilter } from "@/widgets/filters";
 import { Loading } from "@/widgets/loading";
+import {
+    CommonTable,
+    tableFilterFn,
+    TablePagination,
+    useReactTableEx,
+} from "@/widgets/table-pagination";
+import BodyWrapper from "@/widgets/wappers/BodyWrapper";
+import useFetchSlowQueries from "../hooks/use-fetch-slow-queries";
+import { useSlowQueryColumns } from "../hooks/use-slow-query-columns";
 
 const SlowQueriesBody = () => {
   const { csNameMap } = useCsNames();
   const { columns, sorting, setSorting } = useSlowQueryColumns(csNameMap);
-  //   const { dateRange, excludedTags } = useSearchFilter();
   const { data, isPending, mutate } = useFetchSlowQueries();
   const table = useReactTableEx({
     data: data ?? [],

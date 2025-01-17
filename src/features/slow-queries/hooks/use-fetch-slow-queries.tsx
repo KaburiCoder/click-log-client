@@ -1,16 +1,13 @@
 import { useSearchFilter } from "@/widgets/filters";
 import { useMutation } from "@tanstack/react-query";
-import { format } from "date-fns";
 import { useMemo } from "react";
-import { fetchSlowQueries } from "../api/fetch-slow-queries";
+import { fetchSlowQueriesByDate } from "../api/fetch-slow-queries";
 
 const useFetchSlowQueries = () => {
   const { dateRange, excludedTags } = useSearchFilter();
   const { data, mutate, isPending } = useMutation({
     mutationFn: () => {
-      return fetchSlowQueries({
-        ymd: format(dateRange.from!, "yyyyMMdd"),
-      });
+      return fetchSlowQueriesByDate({ dateRange });
     },
   });
 
