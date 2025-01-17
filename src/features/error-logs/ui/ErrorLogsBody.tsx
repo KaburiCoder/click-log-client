@@ -1,13 +1,12 @@
 import { SearchFilter, useSearchFilter } from "@/widgets/filters";
 import { Loading } from "@/widgets/loading";
+import {
+  TablePagination,
+  useReactTableEx,
+  useTablePagination,
+} from "@/widgets/table-pagination";
 import BodyWrapper from "@/widgets/wappers/BodyWrapper";
 import { useMutation } from "@tanstack/react-query";
-import {
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
 import { format } from "date-fns";
 import { useMemo, useState } from "react";
 import { fetchErrorLogsByDate } from "../api/fetch-error-logs";
@@ -15,16 +14,15 @@ import { useCsNames } from "../hooks/use-cs-names";
 import { useErrorLogsColumns } from "../hooks/use-error-logs-columns";
 import { ErrorLog } from "../models/types";
 import { ErrorLogDetailModal } from "./ErrorLogDetailModal";
-import { ErrorLogsPagination } from "./ErrorLogsPagination";
 import { ErrorLogsTable } from "./ErrorLogsTable";
 
 export const ErrorLogsBody = () => {
   const [selectedLog, setSelectedLog] = useState<ErrorLog | null>(null);
-  const [pageSize, setPageSize] = useState(20);
-  const [pageIndex, setPageIndex] = useState(0);
   const { csNameMap } = useCsNames();
   const { columns } = useErrorLogsColumns(csNameMap);
-  const { searchText, dateRange, tags } = useSearchFilter();
+  const { dateRange, tags } = useSearchFilter();
+  const { pageSize, setPageSize, pageIndex, setPageIndex } =
+    useTablePagination();
 
   const { data, mutate, isPending } = useMutation({
     mutationFn: () => {
@@ -48,19 +46,9 @@ export const ErrorLogsBody = () => {
     );
   }, [data, tags]);
 
-  const table = useReactTable({
+  const table = useReactTableEx({
     data: filteredData,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    state: {
-      globalFilter: searchText,
-      pagination: {
-        pageSize,
-        pageIndex,
-      },
-    },
     globalFilterFn: (row, columnId, filterValue) => {
       const value = row.getValue(columnId);
       if (value === null || value === undefined) return false;
@@ -105,13 +93,7 @@ export const ErrorLogsBody = () => {
         />
       )}
 
-      <ErrorLogsPagination
-        table={table}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-        pageIndex={pageIndex}
-        setPageIndex={setPageIndex}
-      />
+      <TablePagination table={table} />
     </BodyWrapper>
   );
 };
