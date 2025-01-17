@@ -3,7 +3,7 @@ import { flexRender, Table } from "@tanstack/react-table";
 
 interface CommonTableProps<T> {
   table: Table<T>;
-  onRowClick: (log: T) => void;
+  onRowClick: (data: T) => void;
 }
 
 export const CommonTable = <T,>({ table, onRowClick }: CommonTableProps<T>) => {
