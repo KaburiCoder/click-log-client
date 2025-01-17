@@ -1,4 +1,6 @@
+import { SearchFilter, useSearchFilter } from "@/widgets/filters";
 import { Loading } from "@/widgets/loading";
+import BodyWrapper from "@/widgets/wappers/BodyWrapper";
 import { useMutation } from "@tanstack/react-query";
 import {
   getCoreRowModel,
@@ -8,28 +10,21 @@ import {
 } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { useMemo, useState } from "react";
-import { DateRange } from "react-day-picker";
 import { fetchErrorLogsByDate } from "../api/fetch-error-logs";
 import { useCsNames } from "../hooks/use-cs-names";
 import { useErrorLogsColumns } from "../hooks/use-error-logs-columns";
 import { ErrorLog } from "../models/types";
 import { ErrorLogDetailModal } from "./ErrorLogDetailModal";
-import { ErrorLogsFilter } from "./ErrorLogsFilter";
 import { ErrorLogsPagination } from "./ErrorLogsPagination";
 import { ErrorLogsTable } from "./ErrorLogsTable";
 
 export const ErrorLogsBody = () => {
   const [selectedLog, setSelectedLog] = useState<ErrorLog | null>(null);
-  const [searchText, setSearchText] = useState("");
   const [pageSize, setPageSize] = useState(20);
   const [pageIndex, setPageIndex] = useState(0);
-  const [dateRange, setDateRange] = useState<DateRange>({
-    from: new Date(),
-    to: new Date(),
-  });
   const { csNameMap } = useCsNames();
   const { columns } = useErrorLogsColumns(csNameMap);
-  const [tags, setTags] = useState<string[]>([]);
+  const { searchText, dateRange, tags } = useSearchFilter();
 
   const { data, mutate, isPending } = useMutation({
     mutationFn: () => {
@@ -93,23 +88,13 @@ export const ErrorLogsBody = () => {
   });
 
   return (
-    <div className="flex flex-col gap-2">
+    <BodyWrapper>
       {isPending && (
         <Loading>
           <div>에러 로그를 조회 중입니다.</div>
         </Loading>
       )}
-      <ErrorLogsFilter
-        tags={tags}
-        onTagChange={setTags}
-        searchText={searchText}
-        onSearchChange={setSearchText}
-        onDateChange={setDateRange}
-        isPending={isPending}
-        onSearch={() => {
-          mutate();
-        }}
-      />
+      <SearchFilter onSearch={mutate} />
       <ErrorLogsTable table={table} onRowClick={setSelectedLog} />
 
       {selectedLog && (
@@ -127,6 +112,6 @@ export const ErrorLogsBody = () => {
         pageIndex={pageIndex}
         setPageIndex={setPageIndex}
       />
-    </div>
+    </BodyWrapper>
   );
 };

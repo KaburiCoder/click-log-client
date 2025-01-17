@@ -1,10 +1,13 @@
 import { ErrorLogsBody } from "@/features/error-logs";
-import { PageLayout } from "@/widgets/page-layout/ui/PageLayout";
+import { SearchFilterProvider } from "@/widgets/filters";
+import { PageLayout } from "@/widgets/page-layout";
 
 export const ErrorLogsPage = () => {
   return (
     <PageLayout title="에러 로그">
-      <ErrorLogsBody />
+      <SearchFilterProvider>
+        <ErrorLogsBody />
+      </SearchFilterProvider>
     </PageLayout>
   );
 };

@@ -1,6 +1,9 @@
+
 export const paths = {
   root: "/",
   login: "/login",
+  errorLogs: "/error-logs",
+  slowQueries: "/slow-queries",
 };
 
 export const apiPaths = {

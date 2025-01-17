@@ -4,30 +4,31 @@ import { LoginPage } from "@/pages/auth";
 import { ListPage } from "@/pages/list";
 import { PrivateRoute } from "./private-route";
 import { ErrorLogsPage } from "@/pages/error-logs";
-import { SettingRecords } from "@/pages/setting-records";
+import { SlowQueriesPage } from "@/pages/slow-queries";
+import { paths } from "@/shared/paths";
 
 export const router = createBrowserRouter([
   {
     element: <PrivateRoute />,
     children: [
       {
-        path: "/login",
+        path: paths.login,
         element: <LoginPage />,
       },
       {
         element: <Layout />,
         children: [
           {
-            path: "/",
+            path: paths.root,
             element: <ErrorLogsPage />,
           },
           {
-            path: "/error-logs",
+            path: paths.errorLogs,
             element: <ErrorLogsPage />,
           },
           {
-            path: "/setting-records",
-            element: <SettingRecords />,
+            path: paths.slowQueries,
+            element: <SlowQueriesPage />,
           },
           {
             path: "/applications",
