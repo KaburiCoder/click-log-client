@@ -41,7 +41,7 @@ export function SlowQueryDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-stretch gap-4 overflow-hidden">
-          <div className="flex min-w-80 flex-col gap-2">
+          <div className="flex max-w-[25rem] flex-col gap-2">
             <DetailItem label="병원코드" value={slowQuery?.ykiho} />
             <DetailItem label="컴퓨터명" value={slowQuery?.computerName} />
             <DetailItem label="어셈블리" value={slowQuery?.assemblyName} />

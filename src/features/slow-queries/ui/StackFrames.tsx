@@ -15,18 +15,20 @@ export const StackFrames: React.FC<StackFramesProps> = ({
   if (!isOpen || !frames?.length) return null;
 
   return (
-    <div className="w-full overflow-y-auto rounded border border-b border-red-300 p-2">
-      <h3 className="mb-2 text-lg font-semibold">Stack Frames</h3>
-      <ul className="space-y-2 text-sm">
+    <div className="w-full overflow-y-auto break-words rounded border border-red-300 p-4">
+      <h3 className="mb-4 text-lg font-semibold">Stack Frames</h3>
+      <ul className="space-y-4">
         {frames.map((frame, index) => (
-          <li key={index}>
+          <li
+            key={index}
+            className="border-b border-gray-200 pb-3 last:border-b-0"
+          >
             <div className="flex flex-col">
               <span className="font-semibold text-blue-600">
-                {frame.assemblyName}.{frame.className}.{frame.methodName}
+                {frame.assemblyName}
               </span>
-              <span className="text-gray-600">
-                offset: {frame.offset}, line: {frame.lineNumber}, column:{" "}
-                {frame.columnNumber}
+              <span className="text-sm text-gray-600">
+                {frame.className}.{frame.methodName}
               </span>
             </div>
           </li>
