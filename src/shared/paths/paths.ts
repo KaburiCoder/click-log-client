@@ -10,6 +10,7 @@ export const apiPaths = {
     errorLog: "/click/error-log",
     stacktrace: (id: string) => `/click/error-log/${id}/stacktrace`,
     slowQuery: "/click/slow-query",
+    slowQueryStackFrames: (id: number) => `/click/slow-query/${id}/stackframes`,
   },
   cpm: {
     csNames: "/cpm/cs/names",

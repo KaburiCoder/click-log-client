@@ -12,6 +12,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { monokai } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { format } from "sql-formatter";
 import { SlowQuery } from "../models/slow-query";
+import { StackFrames } from "./StackFrames";
 
 interface SlowQueryDialogProps {
   isOpen: boolean;
@@ -50,6 +51,8 @@ export function SlowQueryDialog({
               label="실행시간"
               value={`${slowQuery?.executionSeconds}초`}
             />
+
+            <StackFrames slowQueryId={slowQuery?.id || 0} isOpen={isOpen} />
           </div>
           <div className="relative flex max-h-[50rem] max-w-[40rem] flex-col overflow-hidden rounded">
             <div className="absolute right-0 top-0 z-10 flex justify-end">
